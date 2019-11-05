@@ -1,10 +1,26 @@
 @import "../../../styles";
 
+.domain-design {
+  padding: 20px;
+  border: 4px #000 dashed;
+  width: 818px;
+  box-sizing: border-box;
+  visibility: inherit;
+  position: fixed;
+}
+
+.mwlResizable {
+  box-sizing: border-box; // required for the enableGhostResize option to work
+}
+
 .aggregate-container {
-  width: 800px;
+  min-width: 600px;
+  width: 100%;
 }
 
 .drag-item {
+  @extend .noselect;
+
   width: 100px;
   height: 100px;
   margin: 0 10px 10px 0;
@@ -19,6 +35,14 @@
 .drag-item.entity {
   background-color: $color_command;
 }
+
+.group-handle {
+  @extend .drag-item;
+  @extend .entity;
+
+  clear: left;
+}
+
 .drag-item.entity::before {
   display: block;
   clear: both;

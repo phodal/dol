@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~8.2.13",
     "@angular/platform-browser-dynamic": "~8.2.13",
     "@angular/router": "~8.2.13",
+    "angular-resizable-element": "^3.2.6",
     "ng2-dragula": "^2.1.1",
     "rxjs": "~6.4.0",
     "shortid": "^2.2.15",

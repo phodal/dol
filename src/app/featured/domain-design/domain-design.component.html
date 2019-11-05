@@ -1,16 +1,20 @@
-<div class="domain-design" dragula="PARENT" [(dragulaModel)]="domainDesignData">
-    <div *ngFor="let vo of domainDesignData">
-        <div class="drag-item entity">
-            {{vo.name}}
+<div class="domain-design" dragula="PARENT" [(dragulaModel)]="domainDesignData"
+     mwlResizable
+     [enableGhostResize]="true"
+     [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
+     (resizeEnd)="onResizeEnd($event)">
+
+    <div *ngFor="let group of domainDesignData">
+        <div class="group-handle">
+            {{group.name}}
         </div>
         <div class="aggregate-container"
-             dragula="VAMPIRES"
+             dragula="ITEMS"
              (dragulaModelChange)="changeAggregateModel($event)"
-             [(dragulaModel)]="vo.valueObjects">
-            <div class="drag-item vo" *ngFor="let x of vo.valueObjects">
+             [(dragulaModel)]="group.valueObjects">
+            <div class="drag-item vo" *ngFor="let x of group.valueObjects">
                 {{x.name}}
             </div>
         </div>
-        <div class="block"></div>
     </div>
 </div>

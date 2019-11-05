@@ -5,6 +5,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DomainDesignComponent } from './featured/domain-design/domain-design.component';
+import { ResizableModule } from 'angular-resizable-element';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { DomainDesignComponent } from './featured/domain-design/domain-design.co
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DragulaModule.forRoot()
+    DragulaModule.forRoot(),
+    ResizableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

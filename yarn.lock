@@ -1215,6 +1215,13 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
+angular-resizable-element@^3.2.6:
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/angular-resizable-element/-/angular-resizable-element-3.2.6.tgz#1df9b14853691e00b99c74492e729b7a35cf70a0"
+  integrity sha512-8vp5w4YFIrZ2M8EmGpIt/yMwLBjkUJe7aPLPxDDQhi5HQWF0HLJ6lb4tXgEzW572roxNnHFg105EM6XGAMZDIg==
+  dependencies:
+    tslib "^1.9.0"
+
 ansi-colors@4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-4.1.1.tgz#cbb9ae256bf750af1eab344f229aa27fe94ba348"

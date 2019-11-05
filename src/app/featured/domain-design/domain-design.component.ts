@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import shortid from 'shortid';
+import { ResizeEvent } from 'angular-resizable-element';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'app-domain-design',
@@ -7,9 +9,6 @@ import shortid from 'shortid';
   styleUrls: ['./domain-design.component.scss']
 })
 export class DomainDesignComponent implements OnInit {
-
-  constructor() {
-  }
 
   @Input()
   domainDesignData: DomainObject[] = [
@@ -69,11 +68,27 @@ export class DomainDesignComponent implements OnInit {
     }
   }
 
+  constructor(private dragulaService: DragulaService) {
+    this.dragulaService.createGroup('PARENT', {
+      direction: 'vertical',
+      moves: (el, source, handle) => handle.className === 'group-handle'
+    });
+  }
+
   ngOnInit() {
     this.convertDomainDataToDragular(this.domainDesignData);
   }
 
   changeAggregateModel($event: any[]) {
+
+  }
+
+  onRightClick($event) {
+    $event.preventDefault();
+    alert('onRightClick');
+  }
+
+  onResizeEnd($event: ResizeEvent) {
 
   }
 }
