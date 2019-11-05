@@ -1,5 +1,6 @@
 <div class="domain-design" dragula="PARENT" [(dragulaModel)]="domainDesignData"
      mwlResizable
+     (dragulaModelChange)="changeAggregateModel()"
      [enableGhostResize]="true"
      [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
      (resizeEnd)="onResizeEnd($event)">
@@ -10,7 +11,7 @@
         </div>
         <div class="aggregate-container"
              dragula="ITEMS"
-             (dragulaModelChange)="changeAggregateModel($event)"
+             (dragulaModelChange)="changeAggregateModel()"
              [(dragulaModel)]="group.valueObjects">
             <div class="drag-item vo" *ngFor="let x of group.valueObjects">
                 {{x.name}}

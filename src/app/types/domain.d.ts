@@ -1,4 +1,5 @@
 interface ValueObject {
+  id?: string;
   name: string;
 }
 

@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import shortid from 'shortid';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ResizeEvent } from 'angular-resizable-element';
 import { DragulaService } from 'ng2-dragula';
+import Mousetrap from 'mousetrap';
 
 @Component({
   selector: 'app-domain-design',
@@ -9,6 +9,15 @@ import { DragulaService } from 'ng2-dragula';
   styleUrls: ['./domain-design.component.scss']
 })
 export class DomainDesignComponent implements OnInit {
+
+  constructor(private dragulaService: DragulaService, private cd: ChangeDetectorRef) {
+    this.dragulaService.createGroup('PARENT', {
+      direction: 'vertical',
+      moves: (el, source, handle) => handle.className === 'group-handle'
+    });
+
+    this.bindKeyboardEvent();
+  }
 
   @Input()
   domainDesignData: DomainObject[] = [
@@ -45,42 +54,13 @@ export class DomainDesignComponent implements OnInit {
     }
   ];
 
-  dragableDesignData: any[] = [];
-
-  private convertDomainDataToDragular(domainDesignData: DomainObject[]) {
-    for (const aggregateData of domainDesignData) {
-      const parentId = shortid.generate();
-      this.dragableDesignData.push({
-        id: parentId,
-        name: aggregateData.name,
-        children: [],
-        type: 'entity',
-        aggregate: true
-      });
-      for (const vo of aggregateData.valueObjects) {
-        this.dragableDesignData.push({
-          id: shortid.generate(),
-          name: vo.name,
-          parentId,
-          type: 'vo'
-        });
-      }
-    }
-  }
-
-  constructor(private dragulaService: DragulaService) {
-    this.dragulaService.createGroup('PARENT', {
-      direction: 'vertical',
-      moves: (el, source, handle) => handle.className === 'group-handle'
-    });
-  }
+  private changeHistory: any[] = [];
 
   ngOnInit() {
-    this.convertDomainDataToDragular(this.domainDesignData);
   }
 
-  changeAggregateModel($event: any[]) {
-
+  changeAggregateModel() {
+    this.changeHistory.push(this.domainDesignData);
   }
 
   onRightClick($event) {
@@ -90,5 +70,17 @@ export class DomainDesignComponent implements OnInit {
 
   onResizeEnd($event: ResizeEvent) {
 
+  }
+
+  private bindKeyboardEvent() {
+    const that = this;
+    Mousetrap.bind(['command+z', 'ctrl+z'], () => {
+      if (that.changeHistory.length < 1) {
+        return;
+      }
+      that.domainDesignData = that.changeHistory.pop();
+      that.cd.detectChanges();
+      return true;
+    });
   }
 }
