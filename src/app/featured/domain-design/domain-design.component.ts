@@ -1,7 +1,11 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ResizeEvent } from 'angular-resizable-element';
 import { DragulaService } from 'ng2-dragula';
 import Mousetrap from 'mousetrap';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { fromEvent, Subscription } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-domain-design',
@@ -9,8 +13,14 @@ import Mousetrap from 'mousetrap';
   styleUrls: ['./domain-design.component.scss']
 })
 export class DomainDesignComponent implements OnInit {
+  @ViewChild('domainObjectMenu', null) userMenu: TemplateRef<any>;
+  overlayRef: OverlayRef | null;
+  sub: Subscription;
 
-  constructor(private dragulaService: DragulaService, private cd: ChangeDetectorRef) {
+  constructor(private dragulaService: DragulaService, private cd: ChangeDetectorRef,
+              private overlay: Overlay,
+              private viewContainerRef: ViewContainerRef
+  ) {
     this.dragulaService.createGroup('PARENT', {
       direction: 'vertical',
       moves: (el, source, handle) => handle.className === 'group-handle'
@@ -82,5 +92,53 @@ export class DomainDesignComponent implements OnInit {
       that.cd.detectChanges();
       return true;
     });
+  }
+
+  openContext($event: MouseEvent, group: DomainObject) {
+    $event.preventDefault();
+    this.close();
+    const positionStrategy = this.overlay.position()
+      .flexibleConnectedTo({
+        x: $event.x, y: $event.y
+      })
+      .withPositions([
+        {
+          originX: 'end',
+          originY: 'bottom',
+          overlayX: 'end',
+          overlayY: 'top',
+        }
+      ]);
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.close()
+    });
+
+    this.overlayRef.attach(new TemplatePortal(this.userMenu, this.viewContainerRef, {
+      $implicit: group
+    }));
+
+    this.sub = fromEvent<MouseEvent>(document, 'click')
+      .pipe(
+        filter(event => {
+          const clickTarget = event.target as HTMLElement;
+          return !!this.overlayRef && !this.overlayRef.overlayElement.contains(clickTarget);
+        }),
+        take(1)
+      ).subscribe(() => this.close());
+  }
+
+  close() {
+    // tslint:disable-next-line:no-unused-expression
+    this.sub && this.sub.unsubscribe();
+    if (this.overlayRef) {
+      this.overlayRef.dispose();
+      this.overlayRef = null;
+    }
+  }
+
+  deleteDomain(domain) {
+
   }
 }

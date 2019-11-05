@@ -6,7 +6,7 @@
      (resizeEnd)="onResizeEnd($event)">
 
     <div *ngFor="let group of domainDesignData">
-        <div class="group-handle">
+        <div class="group-handle" (contextmenu)="openContext($event, group)">
             {{group.name}}
         </div>
         <div class="aggregate-container"
@@ -19,3 +19,9 @@
         </div>
     </div>
 </div>
+
+<ng-template #domainObjectMenu let-domain>
+    <mat-card class="vo-menu">
+        <div (click)="deleteDomain(domain)">Delete</div>
+    </mat-card>
+</ng-template>

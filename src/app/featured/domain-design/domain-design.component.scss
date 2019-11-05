@@ -52,3 +52,11 @@
   clear: both;
   display: block;
 }
+
+.vo-menu {
+  @extend .noselect;
+
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 10px 20px;
+}
