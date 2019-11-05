@@ -1,0 +1,30 @@
+@import "../../../styles";
+
+.aggregate-container {
+  width: 800px;
+}
+
+.drag-item {
+  width: 100px;
+  height: 100px;
+  margin: 0 10px 10px 0;
+  text-align: center;
+  float: left;
+}
+
+.drag-item.vo {
+  background-color: $color_comment;
+}
+
+.drag-item.entity {
+  background-color: $color_command;
+}
+.drag-item.entity::before {
+  display: block;
+  clear: both;
+}
+
+.block {
+  clear: both;
+  display: block;
+}

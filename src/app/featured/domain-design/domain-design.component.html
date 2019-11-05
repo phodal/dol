@@ -1,1 +1,16 @@
-<p>domain-design works!</p>
+<div class="domain-design" dragula="PARENT" [(dragulaModel)]="domainDesignData">
+    <div *ngFor="let vo of domainDesignData">
+        <div class="drag-item entity">
+            {{vo.name}}
+        </div>
+        <div class="aggregate-container"
+             dragula="VAMPIRES"
+             (dragulaModelChange)="changeAggregateModel($event)"
+             [(dragulaModel)]="vo.valueObjects">
+            <div class="drag-item vo" *ngFor="let x of vo.valueObjects">
+                {{x.name}}
+            </div>
+        </div>
+        <div class="block"></div>
+    </div>
+</div>
