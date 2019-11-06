@@ -5,6 +5,7 @@ interface ValueObject {
 }
 
 interface DomainObject {
+  id?: string;
   isRoot: boolean;
   isEntity: boolean;
   name: string;

@@ -16,6 +16,7 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { fromEvent, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
+import shortid from 'shortid';
 
 @Component({
   selector: 'app-domain-design',
@@ -45,44 +46,55 @@ export class DomainDesignComponent implements OnInit {
   newDomainGroup: DomainObject[] = [];
 
   @Input()
-  domainDesignData: DomainObject[][] = [[
-    {
-      isRoot: true,
-      isEntity: true,
-      name: '订单',
-      valueObjects: [
-        {name: '订单ID'},
-        {name: '币种'},
-        {name: '汇率'},
-        {name: '总价'},
-        {name: '总数'},
-        {name: '收货信息'},
-        {name: '订单状态'},
-        {name: '支付信息'},
-      ]
-    },
-    {
-      isRoot: true,
-      isEntity: true,
-      name: '订单项',
-      valueObjects: [
-        {name: '订单项ID'},
-        {name: '订单ID'},
-        {name: '单价'},
-        {name: '小计'},
-        {name: '数量'},
-        {name: '快照ID'},
-        {name: '配货单ID'},
-        {name: '出库单ID'},
-        {name: '发库单ID'},
-      ]
-    }
-  ]];
+  domainDesignData: DomainObject[][] = [[]];
 
   private changeHistory: any[] = [];
   @ViewChildren('txtArea') textAreas: QueryList<ElementRef>;
+  private lastElement: ValueObject;
 
   ngOnInit() {
+    const testData: DomainObject[] = [
+      {
+        isRoot: true,
+        isEntity: true,
+        name: '订单',
+        valueObjects: [
+          {name: '订单ID'},
+          {name: '币种'},
+          {name: '汇率'},
+          {name: '总价'},
+          {name: '总数'},
+          {name: '收货信息'},
+          {name: '订单状态'},
+          {name: '支付信息'},
+        ]
+      },
+      {
+        isRoot: true,
+        isEntity: true,
+        name: '订单项',
+        valueObjects: [
+          {name: '订单项ID'},
+          {name: '订单ID'},
+          {name: '单价'},
+          {name: '小计'},
+          {name: '数量'},
+          {name: '快照ID'},
+          {name: '配货单ID'},
+          {name: '出库单ID'},
+          {name: '发库单ID'},
+        ]
+      }
+    ];
+
+    for (const domainData of testData) {
+      domainData.id = shortid.generate();
+      for (const vo of domainData.valueObjects) {
+        vo.id = shortid.generate();
+      }
+    }
+
+    this.domainDesignData = [testData];
   }
 
   @HostListener('document:click', ['$event'])
@@ -169,7 +181,17 @@ export class DomainDesignComponent implements OnInit {
   }
 
   enableEdit(x: ValueObject) {
+    if (this.lastElement) {
+      this.lastElement.editable = false;
+      // this.closeLastElement();
+    }
+
     x.editable = true;
+    this.lastElement = x;
+
+    setTimeout(() => {
+      this.textAreas.toArray()[0].nativeElement.focus();
+    });
   }
 
   onTextareaEnter(x: ValueObject) {

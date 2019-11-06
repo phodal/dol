@@ -16,7 +16,8 @@
                  dragula="ITEMS"
                  (dragulaModelChange)="changeAggregateItemModel($event)"
                  [(dragulaModel)]="group.valueObjects">
-                <div class="drag-item vo" *ngFor="let x of group.valueObjects" (dblclick)="enableEdit(x)">
+                <div class="drag-item vo" *ngFor="let x of group.valueObjects;let index = index;"
+                     (dblclick)="enableEdit(x)"  [attr.data-id]="x.id">
                     <span *ngIf="!x.editable">{{x.name}}</span>
                     <textarea #txtArea
                               *ngIf="x.editable"
