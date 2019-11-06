@@ -14,9 +14,12 @@
              dragula="ITEMS"
              (dragulaModelChange)="changeAggregateModel()"
              [(dragulaModel)]="group.valueObjects">
-            <div class="drag-item vo" *ngFor="let x of group.valueObjects">
-                <span *ngIf="!x.editable" (click)="enableEdit(x)">{{x.name}}</span>
-                <textarea #txtArea *ngIf="x.editable" [(ngModel)]= "x.name" (keydown.enter)="onTextareaEnter(x)"></textarea>
+            <div class="drag-item vo" *ngFor="let x of group.valueObjects" (dblclick)="enableEdit(x)">
+                <span *ngIf="!x.editable">{{x.name}}</span>
+                <textarea #txtArea
+                          *ngIf="x.editable"
+                          [(ngModel)]="x.name"
+                          (keydown.enter)="onTextareaEnter(x)"></textarea>
             </div>
         </div>
     </div>

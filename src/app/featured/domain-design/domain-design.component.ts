@@ -27,8 +27,10 @@ export class DomainDesignComponent implements OnInit {
   overlayRef: OverlayRef | null;
   sub: Subscription;
 
-  constructor(private dragulaService: DragulaService, private cd: ChangeDetectorRef,
+  constructor(private dragulaService: DragulaService,
+              private cd: ChangeDetectorRef,
               private overlay: Overlay,
+              private eRef: ElementRef,
               private viewContainerRef: ViewContainerRef
   ) {
     this.dragulaService.createGroup('PARENT', {
@@ -76,9 +78,13 @@ export class DomainDesignComponent implements OnInit {
 
   private changeHistory: any[] = [];
   @ViewChildren('txtArea') textAreas: QueryList<ElementRef>;
-  @HostListener('document:click', ['$event.target'])
 
   ngOnInit() {
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleOutsideClick(event: MouseEvent) {
+
   }
 
   changeAggregateModel() {
