@@ -1,5 +1,6 @@
 interface ValueObject {
   id?: string;
+  editable?: boolean;
   name: string;
 }
 

@@ -8,6 +8,7 @@ import { DomainDesignComponent } from './featured/domain-design/domain-design.co
 import { ResizableModule } from 'angular-resizable-element';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatCardModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MatCardModule } from '@angular/material';
 
     // TODO: extends Angular Material Modules
     MatCardModule,
-    OverlayModule
+    OverlayModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

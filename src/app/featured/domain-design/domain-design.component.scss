@@ -28,11 +28,17 @@
   float: left;
 }
 
+textarea {
+  width: 94px;
+  height: 94px;
+}
+
 .drag-item.vo {
   background-color: $color_comment;
 }
 
 .drag-item.entity {
+  width: 210px;
   background-color: $color_command;
 }
 

@@ -1,4 +1,14 @@
-import { ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef, HostListener,
+  Input,
+  OnInit,
+  QueryList,
+  TemplateRef,
+  ViewChild, ViewChildren,
+  ViewContainerRef
+} from '@angular/core';
 import { ResizeEvent } from 'angular-resizable-element';
 import { DragulaService } from 'ng2-dragula';
 import Mousetrap from 'mousetrap';
@@ -65,6 +75,8 @@ export class DomainDesignComponent implements OnInit {
   ];
 
   private changeHistory: any[] = [];
+  @ViewChildren('txtArea') textAreas: QueryList<ElementRef>;
+  @HostListener('document:click', ['$event.target'])
 
   ngOnInit() {
   }
@@ -140,5 +152,13 @@ export class DomainDesignComponent implements OnInit {
 
   deleteDomain(domain) {
 
+  }
+
+  enableEdit(x: ValueObject) {
+    x.editable = true;
+  }
+
+  onTextareaEnter(x: ValueObject) {
+    x.editable = false;
   }
 }
