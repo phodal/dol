@@ -35,14 +35,17 @@ export class DomainDesignComponent implements OnInit {
   ) {
     this.dragulaService.createGroup('PARENT', {
       direction: 'vertical',
+      removeOnSpill: true,
       moves: (el, source, handle) => handle.className === 'group-handle'
     });
 
     this.bindKeyboardEvent();
   }
 
+  newDomainGroup: DomainObject[] = [];
+
   @Input()
-  domainDesignData: DomainObject[] = [
+  domainDesignData: DomainObject[][] = [[
     {
       isRoot: true,
       isEntity: true,
@@ -74,7 +77,7 @@ export class DomainDesignComponent implements OnInit {
         {name: '发库单ID'},
       ]
     }
-  ];
+  ]];
 
   private changeHistory: any[] = [];
   @ViewChildren('txtArea') textAreas: QueryList<ElementRef>;
@@ -87,8 +90,13 @@ export class DomainDesignComponent implements OnInit {
 
   }
 
-  changeAggregateModel() {
+  changeAggregateModel($event) {
     this.changeHistory.push(this.domainDesignData);
+    // this.domainDesignData = [$event];
+  }
+
+  changeAggregateItemModel($event: any[]) {
+
   }
 
   onRightClick($event) {
@@ -166,5 +174,11 @@ export class DomainDesignComponent implements OnInit {
 
   onTextareaEnter(x: ValueObject) {
     x.editable = false;
+  }
+
+  mergeGroup($event) {
+    this.newDomainGroup = $event;
+    this.domainDesignData.push(this.newDomainGroup);
+    this.cd.detectChanges();
   }
 }

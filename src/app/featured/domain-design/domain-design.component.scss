@@ -1,12 +1,17 @@
 @import "../../../styles";
 
+.domain-design-group {
+  height: 100vh;
+}
+
 .domain-design {
   padding: 20px;
   border: 4px #000 dashed;
   width: 818px;
   box-sizing: border-box;
   visibility: inherit;
-  position: fixed;
+  float: left;
+  min-height: 400px;
 }
 
 .mwlResizable {

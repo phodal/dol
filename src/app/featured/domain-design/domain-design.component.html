@@ -1,29 +1,40 @@
-<div class="domain-design" dragula="PARENT" [(dragulaModel)]="domainDesignData"
-     #insideElement
-     mwlResizable
-     (dragulaModelChange)="changeAggregateModel()"
-     [enableGhostResize]="true"
-     [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
-     (resizeEnd)="onResizeEnd($event)">
+<div class="domain-design-group" *ngFor="let domainGroup of domainDesignData; let last = last;">
+    <div class="domain-design" dragula="PARENT"
+         [(dragulaModel)]="domainGroup"
+         #insideElement
+         mwlResizable
+         (dragulaModelChange)="changeAggregateModel($event)"
+         [enableGhostResize]="true"
+         [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
+         (resizeEnd)="onResizeEnd($event)">
 
-    <div *ngFor="let group of domainDesignData">
-        <div class="group-handle" (contextmenu)="openContext($event, group)">
-            {{group.name}}
-        </div>
-        <div class="aggregate-container"
-             dragula="ITEMS"
-             (dragulaModelChange)="changeAggregateModel()"
-             [(dragulaModel)]="group.valueObjects">
-            <div class="drag-item vo" *ngFor="let x of group.valueObjects" (dblclick)="enableEdit(x)">
-                <span *ngIf="!x.editable">{{x.name}}</span>
-                <textarea #txtArea
-                          *ngIf="x.editable"
-                          [(ngModel)]="x.name"
-                          (keydown.enter)="onTextareaEnter(x)"></textarea>
+        <div *ngFor="let group of domainGroup">
+            <div class="group-handle" (contextmenu)="openContext($event, group)">
+                {{group.name}}
+            </div>
+            <div class="aggregate-container"
+                 dragula="ITEMS"
+                 (dragulaModelChange)="changeAggregateItemModel($event)"
+                 [(dragulaModel)]="group.valueObjects">
+                <div class="drag-item vo" *ngFor="let x of group.valueObjects" (dblclick)="enableEdit(x)">
+                    <span *ngIf="!x.editable">{{x.name}}</span>
+                    <textarea #txtArea
+                              *ngIf="x.editable"
+                              [(ngModel)]="x.name"
+                              (keydown.enter)="onTextareaEnter(x)"></textarea>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="domain-design" dragula="PARENT"
+         [(dragulaModel)]="newDomainGroup"
+         (dragulaModelChange)="mergeGroup($event)"
+    >
+        <p>{{last}}, drag here</p>
+    </div>
 </div>
+
 
 <ng-template #domainObjectMenu let-domain>
     <mat-card class="vo-menu">
