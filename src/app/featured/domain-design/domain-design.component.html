@@ -1,9 +1,8 @@
-<div class="domain-design-group" *ngFor="let domainGroup of domainDesignData; let last = last;">
+<div *ngFor="let domainGroup of domainDesignData">
     <div class="domain-design" dragula="PARENT"
-         [(dragulaModel)]="domainGroup"
-         #insideElement
+         [dragulaModel]="domainGroup"
          mwlResizable
-         (dragulaModelChange)="changeAggregateModel($event)"
+         (dragulaModelChange)="domainGroup = $event;changeAggregateModel($event)"
          [enableGhostResize]="true"
          [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
          (resizeEnd)="onResizeEnd($event)">
@@ -14,10 +13,10 @@
             </div>
             <div class="aggregate-container"
                  dragula="ITEMS"
-                 (dragulaModelChange)="changeAggregateItemModel($event)"
-                 [(dragulaModel)]="group.valueObjects">
+                 [dragulaModel]="group.valueObjects"
+                 (dragulaModelChange)="group.valueObjects = $event;">
                 <div class="drag-item vo" *ngFor="let x of group.valueObjects;let index = index;"
-                     (dblclick)="enableEdit(x)"  [attr.data-id]="x.id">
+                     (dblclick)="enableEdit(x)" [attr.data-id]="x.id">
                     <span *ngIf="!x.editable">{{x.name}}</span>
                     <textarea #txtArea
                               *ngIf="x.editable"
@@ -27,13 +26,12 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="domain-design" dragula="PARENT"
-         [(dragulaModel)]="newDomainGroup"
-         (dragulaModelChange)="mergeGroup($event)"
-    >
-        <p>{{last}}, drag here</p>
-    </div>
+<div class="domain-design" dragula="PARENT"
+     [dragulaModel]="newDomainGroup"
+     (dragulaModelChange)="newDomainGroup = $event; mergeGroup($event)"
+>
 </div>
 
 

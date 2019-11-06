@@ -103,12 +103,7 @@ export class DomainDesignComponent implements OnInit {
   }
 
   changeAggregateModel($event) {
-    this.changeHistory.push(this.domainDesignData);
-    // this.domainDesignData = [$event];
-  }
-
-  changeAggregateItemModel($event: any[]) {
-
+    console.log(this.domainDesignData);
   }
 
   onRightClick($event) {
@@ -183,7 +178,6 @@ export class DomainDesignComponent implements OnInit {
   enableEdit(x: ValueObject) {
     if (this.lastElement) {
       this.lastElement.editable = false;
-      // this.closeLastElement();
     }
 
     x.editable = true;
@@ -199,8 +193,8 @@ export class DomainDesignComponent implements OnInit {
   }
 
   mergeGroup($event) {
-    this.newDomainGroup = $event;
-    this.domainDesignData.push(this.newDomainGroup);
+    this.newDomainGroup = [];
+    this.domainDesignData.push($event);
     this.cd.detectChanges();
   }
 }
