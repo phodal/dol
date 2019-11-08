@@ -32,7 +32,7 @@ export class DomainDesignComponent implements OnInit {
   newDomainGroup: DomainObject[] = [];
 
   @Input()
-  domainDesignData: DomainObjects = {
+  domainDesignData: DomainGroup = {
     domainObjects: [],
     newGroup: this.createNewGroup()
   };
@@ -232,13 +232,11 @@ export class DomainDesignComponent implements OnInit {
     };
   }
 
-  addNewGroup(domainGroup: DomainObject[], groupIndex: number) {
-    // domainGroup.push()
+  addNewGroup(domainGroup: DomainObject[], groupIndex: any) {
     this.domainDesignData.newGroup.id = shortid.generate();
-    domainGroup.push(this.domainDesignData.newGroup);
-    console.log(this.domainDesignData);
+    this.domainDesignData.domainObjects[groupIndex].push(this.domainDesignData.newGroup);
+
     this.domainDesignData.newGroup = this.createNewGroup();
-    this.domainDesignData.newGroup.editable = false;
   }
 
   enableNewGroupEdit(newGroup: DomainObject) {

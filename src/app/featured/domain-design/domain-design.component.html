@@ -13,7 +13,6 @@
             </div>
             <div class="aggregate-container"
                  dragula="ITEMS"
-                 *ngIf="group.valueObjects"
                  [dragulaModel]="group.valueObjects"
                  (dragulaModelChange)="group.valueObjects = $event;">
                 <div class="drag-item vo" *ngFor="let x of group.valueObjects;let index = index;" (dblclick)="enableEdit(x)" [attr.data-id]="x.id">
@@ -34,11 +33,10 @@
         </div>
 
         <div class="new-group">
-            <div class="new-group-item" (dblclick)="enableNewGroupEdit(domainDesignData.newGroup)">
-                <span *ngIf="!domainDesignData.newGroup.editable"></span>
+            <div class="new-group-item" (dblclick)="enableNewGroupEdit(domainDesignData.newGroup)" [attr.data-id]="groupIndex">
                 <textarea #txtArea
-                          *ngIf="domainDesignData.newGroup.editable"
                           [(ngModel)]="domainDesignData.newGroup.name"
+                          [attr.data-textarea-id]="groupIndex"
                           (keydown.enter)="addNewGroup(domainGroup, groupIndex)"></textarea>
             </div>
         </div>

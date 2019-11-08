@@ -14,7 +14,7 @@ interface DomainObject {
   valueObjects: ValueObject[];
 }
 
-interface DomainObjects {
+interface DomainGroup {
   domainObjects?: DomainObject[][];
   newGroup?: DomainObject;
 }
