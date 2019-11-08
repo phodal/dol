@@ -36,7 +36,9 @@
         <div class="new-group">
             <div class="new-group-item" (dblclick)="enableNewGroupEdit(inputData.aggregates[groupIndex].newGroup)"
                  [attr.data-id]="groupIndex">
+                <span *ngIf="!inputData.aggregates[groupIndex].newGroup.editable"></span>
                 <textarea #txtArea
+                          *ngIf="inputData.aggregates[groupIndex].newGroup.editable"
                           [(ngModel)]="inputData.aggregates[groupIndex].newGroup.name"
                           [attr.data-textarea-id]="groupIndex"
                           (keydown.enter)="addNewGroup(inputData.aggregates[groupIndex], groupIndex)"></textarea>

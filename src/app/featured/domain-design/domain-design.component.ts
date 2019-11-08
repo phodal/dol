@@ -52,7 +52,6 @@ export class DomainDesignComponent implements OnInit {
   ) {
     this.dragulaService.createGroup('PARENT', {
       direction: 'vertical',
-      removeOnSpill: true,
       moves: (el, source, handle) => handle.className === 'group-handle'
     });
 
