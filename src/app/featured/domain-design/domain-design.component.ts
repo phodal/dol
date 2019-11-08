@@ -228,6 +228,7 @@ export class DomainDesignComponent implements OnInit {
 
   addItem(newItem: ValueObject, valueObjects: ValueObject[]) {
     valueObjects.push({
+      id: shortid.generate(),
       name: newItem.name
     });
     newItem.editable = false;
