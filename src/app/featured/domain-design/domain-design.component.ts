@@ -18,9 +18,6 @@ import { fromEvent, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import shortid from 'shortid';
 
-
-let viewChild = ViewChild('newGroupTextarea');
-
 @Component({
   selector: 'app-domain-design',
   templateUrl: './domain-design.component.html',
@@ -28,16 +25,17 @@ let viewChild = ViewChild('newGroupTextarea');
 })
 export class DomainDesignComponent implements OnInit {
   @ViewChild('domainObjectMenu', null) userMenu: TemplateRef<any>;
-  @ViewChildren('txtArea') textAreas: QueryList<ElementRef>;
-  @viewChild newGroupTextarea: ElementRef;
+  @ViewChildren('txtArea', null) textAreas: QueryList<ElementRef>;
 
   overlayRef: OverlayRef | null;
   sub: Subscription;
-  isEnableNewGroup = false;
-  newGroupText = '';
   newDomainGroup: DomainObject[] = [];
 
-  @Input() domainDesignData: DomainObject[][] = [[]];
+  @Input()
+  domainDesignData: DomainObjects = {
+    domainObjects: [],
+    newGroup: this.createNewGroup()
+  };
 
   private changeHistory: any[] = [];
   private lastElement: ValueObject;
@@ -107,7 +105,7 @@ export class DomainDesignComponent implements OnInit {
       }
     }
 
-    this.domainDesignData = [testData];
+    this.domainDesignData.domainObjects = [testData];
   }
 
   @HostListener('document:click', ['$event'])
@@ -207,7 +205,7 @@ export class DomainDesignComponent implements OnInit {
 
   mergeGroup($event) {
     this.newDomainGroup = [];
-    this.domainDesignData.push($event);
+    this.domainDesignData.domainObjects.push($event);
     this.cd.detectChanges();
   }
 
@@ -219,26 +217,41 @@ export class DomainDesignComponent implements OnInit {
     newItem.name = '';
   }
 
-  addNewGroup(domainGroup: DomainObject[]) {
-    const newGroup: DomainObject = {
-      name: this.newGroupText,
-      isRoot: false,
+
+  private createNewGroup() {
+    return {
+      name: '',
       isEntity: false,
-      id: shortid.generate,
+      isRoot: false,
+      valueObjects: [],
+      editable: false,
       newItem: {
-        editable: false,
-        name: ''
-      },
-      valueObjects: []
+        name: '',
+        editable: false
+      }
     };
-    domainGroup.push(newGroup);
-    this.newGroupText = '';
-    this.isEnableNewGroup = false;
   }
 
-  enableNewGroupEdit() {
+  addNewGroup(domainGroup: DomainObject[], groupIndex: number) {
+    // domainGroup.push()
+    this.domainDesignData.newGroup.id = shortid.generate();
+    domainGroup.push(this.domainDesignData.newGroup);
+    console.log(this.domainDesignData);
+    this.domainDesignData.newGroup = this.createNewGroup();
+    this.domainDesignData.newGroup.editable = false;
+  }
+
+  enableNewGroupEdit(newGroup: DomainObject) {
+    if (this.lastElement) {
+      this.lastElement.editable = false;
+    }
+
+    newGroup.editable = true;
+    this.lastElement = newGroup;
+
     setTimeout(() => {
-      this.newGroupTextarea.nativeElement.focus();
-    });
+      this.domainDesignData.newGroup.editable = true;
+      this.textAreas.toArray()[0].nativeElement.focus();
+    }, 50);
   }
 }

@@ -1,4 +1,4 @@
-<div *ngFor="let domainGroup of domainDesignData">
+<div *ngFor="let domainGroup of domainDesignData.domainObjects; let groupIndex = index;">
     <div class="domain-design" dragula="PARENT"
          [dragulaModel]="domainGroup"
          mwlResizable
@@ -13,10 +13,10 @@
             </div>
             <div class="aggregate-container"
                  dragula="ITEMS"
+                 *ngIf="group.valueObjects"
                  [dragulaModel]="group.valueObjects"
                  (dragulaModelChange)="group.valueObjects = $event;">
-                <div class="drag-item vo" *ngFor="let x of group.valueObjects;let index = index;"
-                     (dblclick)="enableEdit(x)" [attr.data-id]="x.id">
+                <div class="drag-item vo" *ngFor="let x of group.valueObjects;let index = index;" (dblclick)="enableEdit(x)" [attr.data-id]="x.id">
                     <span *ngIf="!x.editable">{{x.name}}</span>
                     <textarea #txtArea
                               *ngIf="x.editable"
@@ -34,11 +34,12 @@
         </div>
 
         <div class="new-group">
-            <div class="new-group-item" (dblclick)="isEnableNewGroup = true; enableNewGroupEdit()">
-            <textarea #newGroupTextarea
-                      *ngIf="isEnableNewGroup"
-                      [(ngModel)]="newGroupText"
-                      (keydown.enter)="addNewGroup(domainGroup)"></textarea>
+            <div class="new-group-item" (dblclick)="enableNewGroupEdit(domainDesignData.newGroup)">
+                <span *ngIf="!domainDesignData.newGroup.editable"></span>
+                <textarea #txtArea
+                          *ngIf="domainDesignData.newGroup.editable"
+                          [(ngModel)]="domainDesignData.newGroup.name"
+                          (keydown.enter)="addNewGroup(domainGroup, groupIndex)"></textarea>
             </div>
         </div>
     </div>
