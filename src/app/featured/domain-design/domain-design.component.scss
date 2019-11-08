@@ -23,6 +23,7 @@
   width: 100%;
 }
 
+.create-item,
 .drag-item {
   @extend .noselect;
 
@@ -31,6 +32,11 @@
   margin: 0 10px 10px 0;
   text-align: center;
   float: left;
+}
+
+.create-item {
+  border: 1px #000 dashed;
+  width: 100px;
 }
 
 textarea {

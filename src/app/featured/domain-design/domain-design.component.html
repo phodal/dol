@@ -23,6 +23,13 @@
                               [(ngModel)]="x.name"
                               (keydown.enter)="onTextareaEnter(x)"></textarea>
                 </div>
+                <div class="create-item" (dblclick)="createStatus.editable = true">
+                    <span *ngIf="!createStatus.editable"></span>
+                     <textarea #addArea
+                               *ngIf="createStatus.editable"
+                               [(ngModel)]="createItemModel"
+                               (keydown.enter)="addItem(group.valueObjects)"></textarea>
+                </div>
             </div>
         </div>
     </div>

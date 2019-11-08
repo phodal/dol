@@ -51,6 +51,8 @@ export class DomainDesignComponent implements OnInit {
   private changeHistory: any[] = [];
   @ViewChildren('txtArea') textAreas: QueryList<ElementRef>;
   private lastElement: ValueObject;
+  createItemModel: string;
+  createStatus: ValueObject = {name: ''};
 
   ngOnInit() {
     const testData: DomainObject[] = [
@@ -196,5 +198,12 @@ export class DomainDesignComponent implements OnInit {
     this.newDomainGroup = [];
     this.domainDesignData.push($event);
     this.cd.detectChanges();
+  }
+
+  addItem(valueObjects: ValueObject[]) {
+    valueObjects.push({
+      name: this.createItemModel
+    });
+    this.createItemModel = "";
   }
 }
