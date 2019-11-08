@@ -223,7 +223,6 @@ export class DomainDesignComponent implements OnInit {
     );
     this.newDomainGroup = undefined;
     this.cd.detectChanges();
-    console.log(this.inputData);
   }
 
   addItem(newItem: ValueObject, valueObjects: ValueObject[]) {
@@ -249,7 +248,7 @@ export class DomainDesignComponent implements OnInit {
     };
   }
 
-  addNewGroup(domainGroup: AggregateItem, groupIndex: any) {
+  addNewGroup(domainGroup: AggregateItem) {
     domainGroup.newGroup.id = shortid.generate();
     domainGroup.domainObjects.push(domainGroup.newGroup);
     domainGroup.newGroup = this.createNewGroup();

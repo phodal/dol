@@ -41,7 +41,7 @@
                           *ngIf="inputData.aggregates[groupIndex].newGroup.editable"
                           [(ngModel)]="inputData.aggregates[groupIndex].newGroup.name"
                           [attr.data-textarea-id]="groupIndex"
-                          (keydown.enter)="addNewGroup(inputData.aggregates[groupIndex], groupIndex)"></textarea>
+                          (keydown.enter)="addNewGroup(inputData.aggregates[groupIndex])"></textarea>
             </div>
         </div>
     </div>
