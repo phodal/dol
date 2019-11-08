@@ -1,13 +1,13 @@
-<div *ngFor="let domainGroup of domainDesignData.domainObjects; let groupIndex = index;">
+<div *ngFor="let aggregate of inputData.aggregates; let groupIndex = index;">
     <div class="domain-design" dragula="PARENT"
-         [dragulaModel]="domainGroup"
+         [dragulaModel]="aggregate.domainObjects"
          mwlResizable
-         (dragulaModelChange)="domainGroup = $event;changeAggregateModel($event)"
+         (dragulaModelChange)="aggregate.domainObjects = $event;changeAggregateModel($event)"
          [enableGhostResize]="true"
          [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
          (resizeEnd)="onResizeEnd($event)">
 
-        <div *ngFor="let group of domainGroup">
+        <div *ngFor="let group of aggregate.domainObjects">
             <div class="group-handle" (contextmenu)="openContext($event, group)">
                 {{group.name}}
             </div>
@@ -33,11 +33,11 @@
         </div>
 
         <div class="new-group">
-            <div class="new-group-item" (dblclick)="enableNewGroupEdit(domainDesignData.newGroup)" [attr.data-id]="groupIndex">
+            <div class="new-group-item" (dblclick)="enableNewGroupEdit(inputData.aggregates[groupIndex].newGroup)" [attr.data-id]="groupIndex">
                 <textarea #txtArea
-                          [(ngModel)]="domainDesignData.newGroup.name"
+                          [(ngModel)]="inputData.aggregates[groupIndex].newGroup.name"
                           [attr.data-textarea-id]="groupIndex"
-                          (keydown.enter)="addNewGroup(domainGroup, groupIndex)"></textarea>
+                          (keydown.enter)="addNewGroup(inputData.aggregates[groupIndex], groupIndex)"></textarea>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
 
 <div class="domain-design" dragula="PARENT"
      [dragulaModel]="newDomainGroup"
-     (dragulaModelChange)="newDomainGroup = $event; mergeGroup($event)"
+     (dragulaModelChange)="newDomainGroup.domainObjects = $event; mergeGroup(newDomainGroup)"
 >
 </div>
 

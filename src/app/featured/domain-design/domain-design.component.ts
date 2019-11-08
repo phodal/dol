@@ -29,12 +29,16 @@ export class DomainDesignComponent implements OnInit {
 
   overlayRef: OverlayRef | null;
   sub: Subscription;
-  newDomainGroup: DomainObject[] = [];
+  newDomainGroup: AggregateItem[] = [];
 
   @Input()
-  domainDesignData: DomainGroup = {
-    domainObjects: [],
-    newGroup: this.createNewGroup()
+  inputData: AggregateGroup = {
+    aggregates: [
+      {
+        domainObjects: [],
+        newGroup: this.createNewGroup()
+      }
+    ]
   };
 
   private changeHistory: any[] = [];
@@ -105,7 +109,12 @@ export class DomainDesignComponent implements OnInit {
       }
     }
 
-    this.domainDesignData.domainObjects = [testData];
+    this.inputData = {
+      aggregates: [{
+        domainObjects: testData,
+        newGroup: this.createNewGroup()
+      }]
+    };
   }
 
   @HostListener('document:click', ['$event'])
@@ -114,7 +123,7 @@ export class DomainDesignComponent implements OnInit {
   }
 
   changeAggregateModel($event) {
-    console.log(this.domainDesignData);
+    console.log(this.inputData);
   }
 
   onRightClick($event) {
@@ -132,7 +141,7 @@ export class DomainDesignComponent implements OnInit {
       if (that.changeHistory.length < 1) {
         return;
       }
-      that.domainDesignData = that.changeHistory.pop();
+      that.inputData = that.changeHistory.pop();
       that.cd.detectChanges();
       return true;
     });
@@ -202,11 +211,20 @@ export class DomainDesignComponent implements OnInit {
   onTextareaEnter(x: ValueObject) {
     x.editable = false;
   }
+  //
+  // mergeGroup(domainObjects: DomainObject[]) {
+  // }
 
-  mergeGroup($event) {
-    this.newDomainGroup = [];
-    this.domainDesignData.domainObjects.push($event);
+
+  mergeGroup(newDomainGroup: AggregateItem) {
+    this.inputData.aggregates.push({
+        domainObjects: newDomainGroup.domainObjects,
+        newGroup: this.createNewGroup()
+      }
+    );
+    this.newDomainGroup = undefined;
     this.cd.detectChanges();
+    console.log(this.inputData);
   }
 
   addItem(newItem: ValueObject, valueObjects: ValueObject[]) {
@@ -216,7 +234,6 @@ export class DomainDesignComponent implements OnInit {
     newItem.editable = false;
     newItem.name = '';
   }
-
 
   private createNewGroup() {
     return {
@@ -232,11 +249,10 @@ export class DomainDesignComponent implements OnInit {
     };
   }
 
-  addNewGroup(domainGroup: DomainObject[], groupIndex: any) {
-    this.domainDesignData.newGroup.id = shortid.generate();
-    this.domainDesignData.domainObjects[groupIndex].push(this.domainDesignData.newGroup);
-
-    this.domainDesignData.newGroup = this.createNewGroup();
+  addNewGroup(domainGroup: AggregateItem, groupIndex: any) {
+    domainGroup.newGroup.id = shortid.generate();
+    domainGroup.domainObjects.push(domainGroup.newGroup);
+    domainGroup.newGroup = this.createNewGroup();
   }
 
   enableNewGroupEdit(newGroup: DomainObject) {
@@ -248,7 +264,7 @@ export class DomainDesignComponent implements OnInit {
     this.lastElement = newGroup;
 
     setTimeout(() => {
-      this.domainDesignData.newGroup.editable = true;
+      newGroup.editable = true;
       this.textAreas.toArray()[0].nativeElement.focus();
     }, 50);
   }

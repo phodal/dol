@@ -14,7 +14,11 @@ interface DomainObject {
   valueObjects: ValueObject[];
 }
 
-interface DomainGroup {
-  domainObjects?: DomainObject[][];
+interface AggregateItem {
+  domainObjects?: DomainObject[];
   newGroup?: DomainObject;
+}
+
+interface AggregateGroup {
+  aggregates: AggregateItem[];
 }
