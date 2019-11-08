@@ -216,9 +216,9 @@ export class DomainDesignComponent implements OnInit {
   // }
 
 
-  mergeGroup(newDomainGroup: AggregateItem) {
+  mergeGroup(newDomainGroup: AggregateItem[]) {
     this.inputData.aggregates.push({
-        domainObjects: newDomainGroup.domainObjects,
+        domainObjects: newDomainGroup[0].domainObjects,
         newGroup: this.createNewGroup()
       }
     );
