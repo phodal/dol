@@ -23,6 +23,7 @@
     "@angular/router": "~8.2.13",
     "angular-resizable-element": "^3.2.6",
     "hammerjs": "^2.0.8",
+    "localforage": "^1.7.3",
     "mousetrap": "^1.6.3",
     "ng2-dragula": "^2.1.1",
     "normalize.css": "^8.0.1",

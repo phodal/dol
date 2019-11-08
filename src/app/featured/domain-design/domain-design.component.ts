@@ -17,6 +17,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { fromEvent, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import shortid from 'shortid';
+import * as localforage from 'localforage';
 
 @Component({
   selector: 'app-domain-design',
@@ -62,6 +63,22 @@ export class DomainDesignComponent implements OnInit {
   }
 
   ngOnInit() {
+    const that = this;
+    localforage.getItem('domain-design-key', (err, value) => {
+      if (err) {
+        this.usedTestData();
+        return;
+      }
+
+      if (value) {
+        that.inputData = value as any;
+      } else {
+        this.usedTestData();
+      }
+    });
+  }
+
+  private usedTestData() {
     const testData: DomainObject[] = [
       {
         isRoot: true,
@@ -125,12 +142,16 @@ export class DomainDesignComponent implements OnInit {
   }
 
   changeAggregateModel($event, groupIndex: number) {
-    console.log($event);
+
   }
 
   onRightClick($event) {
     $event.preventDefault();
     alert('onRightClick');
+  }
+
+  storageData() {
+    localforage.setItem('domain-design-key', this.inputData);
   }
 
   onResizeEnd($event: ResizeEvent) {
@@ -230,6 +251,7 @@ export class DomainDesignComponent implements OnInit {
       newGroup: this.createNewGroup()
     };
     this.cd.detectChanges();
+    this.storageData();
   }
 
   addValueObject(newItem: ValueObject, valueObjects: ValueObject[]) {
@@ -239,6 +261,8 @@ export class DomainDesignComponent implements OnInit {
     });
     newItem.editable = false;
     newItem.name = '';
+
+    this.storageData();
   }
 
   private createNewGroup() {
@@ -259,6 +283,8 @@ export class DomainDesignComponent implements OnInit {
     domainGroup.newGroup.id = shortid.generate();
     domainGroup.domainObjects.push(domainGroup.newGroup);
     domainGroup.newGroup = this.createNewGroup();
+
+    this.storageData();
   }
 
   enableNewGroupEdit(newGroup: DomainObject) {

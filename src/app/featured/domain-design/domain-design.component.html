@@ -2,6 +2,7 @@
     <div dragula="PARENT"
          [(dragulaModel)]="aggregate.domainObjects"
          mwlResizable
+         (dragulaModelChange)="storageData()"
          [enableGhostResize]="true"
          [resizeEdges]="{ bottom: true, right: true, top: true, left: true }"
          (resizeEnd)="onResizeEnd($event)">
@@ -12,6 +13,7 @@
             </div>
             <div class="aggregate-container"
                  dragula="ITEMS"
+                 (dragulaModelChange)="storageData()"
                  [(dragulaModel)]="group.valueObjects">
                 <div class="drag-item vo" *ngFor="let x of group.valueObjects;let index = index;"
                      (dblclick)="enableEdit(x)" [attr.data-id]="x.id">
