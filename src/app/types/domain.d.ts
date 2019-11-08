@@ -9,5 +9,6 @@ interface DomainObject {
   isRoot: boolean;
   isEntity: boolean;
   name: string;
+  newItem?: ValueObject;
   valueObjects: ValueObject[];
 }

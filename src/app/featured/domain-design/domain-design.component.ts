@@ -51,8 +51,6 @@ export class DomainDesignComponent implements OnInit {
   private changeHistory: any[] = [];
   @ViewChildren('txtArea') textAreas: QueryList<ElementRef>;
   private lastElement: ValueObject;
-  createItemModel: string;
-  createStatus: ValueObject = {name: ''};
 
   ngOnInit() {
     const testData: DomainObject[] = [
@@ -60,6 +58,10 @@ export class DomainDesignComponent implements OnInit {
         isRoot: true,
         isEntity: true,
         name: '订单',
+        newItem: {
+          editable: false,
+          name: ''
+        },
         valueObjects: [
           {name: '订单ID'},
           {name: '币种'},
@@ -75,6 +77,10 @@ export class DomainDesignComponent implements OnInit {
         isRoot: true,
         isEntity: true,
         name: '订单项',
+        newItem: {
+          editable: false,
+          name: ''
+        },
         valueObjects: [
           {name: '订单项ID'},
           {name: '订单ID'},
@@ -200,10 +206,11 @@ export class DomainDesignComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  addItem(valueObjects: ValueObject[]) {
+  addItem(newItem: ValueObject, valueObjects: ValueObject[]) {
     valueObjects.push({
-      name: this.createItemModel
+      name: newItem.name
     });
-    this.createItemModel = "";
+    newItem.editable = false;
+    newItem.name = '';
   }
 }
