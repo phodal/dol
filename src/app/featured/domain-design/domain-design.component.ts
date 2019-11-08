@@ -29,7 +29,10 @@ export class DomainDesignComponent implements OnInit {
 
   overlayRef: OverlayRef | null;
   sub: Subscription;
-  newDomainGroup: AggregateItem[] = [];
+  newDomainGroup: AggregateItem = {
+    domainObjects: [],
+    newGroup: this.createNewGroup()
+  };
 
   @Input()
   inputData: AggregateGroup = {
@@ -121,8 +124,8 @@ export class DomainDesignComponent implements OnInit {
 
   }
 
-  changeAggregateModel($event) {
-    console.log(this.inputData);
+  changeAggregateModel($event, groupIndex: number) {
+    console.log($event);
   }
 
   onRightClick($event) {
@@ -210,22 +213,26 @@ export class DomainDesignComponent implements OnInit {
   onTextareaEnter(x: ValueObject) {
     x.editable = false;
   }
+
   //
   // mergeGroup(domainObjects: DomainObject[]) {
   // }
 
 
-  mergeGroup(newDomainGroup: AggregateItem[]) {
+  mergeGroup($event) {
     this.inputData.aggregates.push({
-        domainObjects: newDomainGroup[0].domainObjects,
+        domainObjects: this.newDomainGroup.domainObjects,
         newGroup: this.createNewGroup()
       }
     );
-    this.newDomainGroup = undefined;
+    this.newDomainGroup = {
+      domainObjects: [],
+      newGroup: this.createNewGroup()
+    };
     this.cd.detectChanges();
   }
 
-  addItem(newItem: ValueObject, valueObjects: ValueObject[]) {
+  addValueObject(newItem: ValueObject, valueObjects: ValueObject[]) {
     valueObjects.push({
       id: shortid.generate(),
       name: newItem.name
@@ -248,7 +255,7 @@ export class DomainDesignComponent implements OnInit {
     };
   }
 
-  addNewGroup(domainGroup: AggregateItem) {
+  addNewAggregate(domainGroup: AggregateItem) {
     domainGroup.newGroup.id = shortid.generate();
     domainGroup.domainObjects.push(domainGroup.newGroup);
     domainGroup.newGroup = this.createNewGroup();
