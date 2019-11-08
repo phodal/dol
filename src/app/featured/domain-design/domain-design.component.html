@@ -25,11 +25,20 @@
                 </div>
                 <div class="create-item" (dblclick)="enableEdit(group.newItem)">
                     <span *ngIf="!group.newItem.editable"></span>
-                     <textarea #txtArea
-                               *ngIf="group.newItem.editable"
-                               [(ngModel)]="group.newItem.name"
-                               (keydown.enter)="addItem(group.newItem, group.valueObjects)"></textarea>
+                    <textarea #txtArea
+                              *ngIf="group.newItem.editable"
+                              [(ngModel)]="group.newItem.name"
+                              (keydown.enter)="addItem(group.newItem, group.valueObjects)"></textarea>
                 </div>
+            </div>
+        </div>
+
+        <div class="new-group">
+            <div class="new-group-item" (dblclick)="isEnableNewGroup = true; enableNewGroupEdit()">
+            <textarea #newGroupTextarea
+                      *ngIf="isEnableNewGroup"
+                      [(ngModel)]="newGroupText"
+                      (keydown.enter)="addNewGroup(domainGroup)"></textarea>
             </div>
         </div>
     </div>

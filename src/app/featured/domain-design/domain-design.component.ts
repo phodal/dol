@@ -18,6 +18,9 @@ import { fromEvent, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import shortid from 'shortid';
 
+
+let viewChild = ViewChild('newGroupTextarea');
+
 @Component({
   selector: 'app-domain-design',
   templateUrl: './domain-design.component.html',
@@ -25,8 +28,19 @@ import shortid from 'shortid';
 })
 export class DomainDesignComponent implements OnInit {
   @ViewChild('domainObjectMenu', null) userMenu: TemplateRef<any>;
+  @ViewChildren('txtArea') textAreas: QueryList<ElementRef>;
+  @viewChild newGroupTextarea: ElementRef;
+
   overlayRef: OverlayRef | null;
   sub: Subscription;
+  isEnableNewGroup = false;
+  newGroupText = '';
+  newDomainGroup: DomainObject[] = [];
+
+  @Input() domainDesignData: DomainObject[][] = [[]];
+
+  private changeHistory: any[] = [];
+  private lastElement: ValueObject;
 
   constructor(private dragulaService: DragulaService,
               private cd: ChangeDetectorRef,
@@ -42,15 +56,6 @@ export class DomainDesignComponent implements OnInit {
 
     this.bindKeyboardEvent();
   }
-
-  newDomainGroup: DomainObject[] = [];
-
-  @Input()
-  domainDesignData: DomainObject[][] = [[]];
-
-  private changeHistory: any[] = [];
-  @ViewChildren('txtArea') textAreas: QueryList<ElementRef>;
-  private lastElement: ValueObject;
 
   ngOnInit() {
     const testData: DomainObject[] = [
@@ -212,5 +217,28 @@ export class DomainDesignComponent implements OnInit {
     });
     newItem.editable = false;
     newItem.name = '';
+  }
+
+  addNewGroup(domainGroup: DomainObject[]) {
+    const newGroup: DomainObject = {
+      name: this.newGroupText,
+      isRoot: false,
+      isEntity: false,
+      id: shortid.generate,
+      newItem: {
+        editable: false,
+        name: ''
+      },
+      valueObjects: []
+    };
+    domainGroup.push(newGroup);
+    this.newGroupText = '';
+    this.isEnableNewGroup = false;
+  }
+
+  enableNewGroupEdit() {
+    setTimeout(() => {
+      this.newGroupTextarea.nativeElement.focus();
+    });
   }
 }
