@@ -43,8 +43,10 @@
 }
 
 .create-item {
-  border: 1px #000 dashed;
-  width: 100px;
+  opacity: 0.39;
+  width: 96px;
+
+  border: 2px $color_entity dotted;
 }
 
 textarea {
@@ -71,7 +73,8 @@ textarea {
   text-align: center;
   float: left;
 
-  border: 1px $color_event dashed;
+  opacity: 0.39;
+  border: 2px $color_event dashed;
 }
 
 .group-handle {
@@ -97,4 +100,16 @@ textarea {
   background-color: #fff;
   border-radius: 6px;
   padding: 10px 20px;
+}
+
+textarea:focus {
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  resize: none; /*remove the resize handle on the bottom right*/
 }
