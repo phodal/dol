@@ -1,17 +1,25 @@
 @import "../../../styles";
 
-.domain-design-group {
-  height: 100vh;
+:host {
+  display: flex;
+  width: fit-content;
 }
 
 .domain-design {
-  padding: 20px;
-  border: 4px #000 dashed;
+  display: inline-block;
+  float: left;
+
+  min-width: 400px;
+  max-width: 820px;
   width: 818px;
+  min-height: 600px;
+
+  padding: 20px;
+  margin: 10px;
+  border: 4px $selected_border_color dashed;
   box-sizing: border-box;
   visibility: inherit;
-  float: left;
-  min-height: 400px;
+  //width: fit-content;
 }
 
 .mwlResizable {
@@ -45,11 +53,11 @@ textarea {
 }
 
 .drag-item.vo {
-  background-color: $color_comment;
+  background-color: $color_entity;
 }
 
 .drag-item.entity {
-  background-color: $color_command;
+  background-color: $color_concept;
 }
 
 .new-group {
