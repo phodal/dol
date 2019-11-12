@@ -9,11 +9,13 @@ import { ResizableModule } from 'angular-resizable-element';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatCardModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { ContextDependenceInteractComponent } from './featured/context-dependence-interact/context-dependence-interact.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DomainDesignComponent
+    DomainDesignComponent,
+    ContextDependenceInteractComponent
   ],
   imports: [
     BrowserModule,
