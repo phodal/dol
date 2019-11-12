@@ -2,6 +2,7 @@ import { Component, Input, ChangeDetectorRef, HostListener, ChangeDetectionStrat
 import { D3Service, ForceDirectedGraph, Node } from '../../d3';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'graph',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

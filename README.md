@@ -1,5 +1,10 @@
 # Dismember
 
+Todo:
+
+ - Drag to Select: [https://github.com/d3lm/ngx-drag-to-select](https://github.com/d3lm/ngx-drag-to-select)
+ - D3.js context Menu: [https://github.com/patorjk/d3-context-menu](https://github.com/patorjk/d3-context-menu)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
 
 ## Development server
