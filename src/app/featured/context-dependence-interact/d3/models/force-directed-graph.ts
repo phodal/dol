@@ -55,6 +55,7 @@ export class ForceDirectedGraph {
       d3.forceLink(this.links)
         .id((d: any) => d.id)
         .strength(FORCES.LINKS)
+        .distance(100)
     );
   }
 

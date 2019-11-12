@@ -6,13 +6,15 @@ import { Node } from '../../../d3';
   selector: '[nodeVisual]',
   template: `
     <svg:g [attr.transform]="'translate(' + node.x + ',' + node.y + ')'">
-      <svg:circle
+      <svg:rect
           class="node"
           [attr.fill]="node.color"
-          cx="0"
-          cy="0"
-          [attr.r]="node.r">
-      </svg:circle>
+          [attr.x]="-node.width/2"
+          [attr.y]="-node.height/2"
+          [attr.width]="node.width"
+          [attr.height]="node.height"
+          >
+      </svg:rect>
       <svg:text
           class="node-name"
           [attr.font-size]="node.fontSize">
