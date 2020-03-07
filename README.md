@@ -1,32 +1,13 @@
 # Dismember
 
-Todo:
+> a online Domain Driven Design tool
 
- - Drag to Select: [https://github.com/d3lm/ngx-drag-to-select](https://github.com/d3lm/ngx-drag-to-select)
- - D3.js context Menu: [https://github.com/patorjk/d3-context-menu](https://github.com/patorjk/d3-context-menu)
+![Dismember](docs/domain-design.png)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
+License
+---
 
-## Development server
+[![Phodal's Idea](http://brand.phodal.com/shields/idea-small.svg)](http://ideas.phodal.com/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+@ 2020 A [Phodal Huang](https://www.phodal.com)'s [Idea](http://github.com/phodal/ideas).  This code is distributed under the MPL license. See `LICENSE` in this directory.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
