@@ -6,7 +6,7 @@ import { ContextDependenceInteractComponent } from './featured/context-dependenc
 
 const routes: Routes = [
   {
-    path: 'domain-design',
+    path: '',
     component: DomainDesignComponent
   }, {
     path: 'context-dependence-interact',
