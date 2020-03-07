@@ -2,7 +2,18 @@
 
 > a online Domain Driven Design tool
 
+Demo: [https://dol.phodal.com/](https://dol.phodal.com/)
+
+## Screenshot
+
 ![Dismember](docs/domain-design.png)
+
+## Setup
+
+```
+yarn install
+yarn start
+```
 
 License
 ---
