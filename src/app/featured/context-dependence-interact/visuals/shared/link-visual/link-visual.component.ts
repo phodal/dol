@@ -16,5 +16,5 @@ import { Link } from '../../../d3';
   styleUrls: ['./link-visual.component.css']
 })
 export class LinkVisualComponent  {
-  @Input('linkVisual') link: Link;
+  @Input('linkVisual') link: any;
 }
